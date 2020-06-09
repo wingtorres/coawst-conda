@@ -10,16 +10,13 @@ quick guide to installing the libraries necessary to build COAWST via conda
 
 ## Create a conda environment w/ requisite libraries
 Here we will use *conda*, which is often associated with managing python packages, but can really be used for any software 
-(it's very worth checking out this [article](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/) by @jakedvp for more information).
+(it's very worth checking out this [article](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/) by @jakedvp for more information). Conda is a good way to install the prerequisite libraries for COAWST - namely MPI and NETCDF to save the hassle of building the code from source, which can be intimidating and difficult
+for people like me who aren't super comfortable at the command line. Managing software within environments also allow us to keep software and dependencies organized, which faciltates reproducibility and portability.
 
-Here we will use *conda* to install the prerequisite libraries for COAWST - namely MPI and NETCDF to save us the hassle of building the code from source, which can be intimidating and difficult
-for people like me who aren't super comfortable at the command line. Environments also allow us to keep software and dependencies organized,
-which faciltates reproducibility and portability.
+I recommend using the lightweight Miniconda, and to install it following the excellent [guide](https://medium.com/@rabernat/custom-conda-environments-for-data-science-on-hpc-clusters-32d58c63aa95) by @rabernat. 
+Instead of using his example environment.yml, I've provided a coawst.yml file in this repository that we can use to create an environment for COAWST. This environment by default just contains the bare essentials for running COAWST - the Open MPI software and compiler wrappers as well as netCDF-C and netCDF-fortran. 
 
-I recommend the lightweight Miniconda, and to install it following the excellent [guide](https://medium.com/@rabernat/custom-conda-environments-for-data-science-on-hpc-clusters-32d58c63aa95) by @rabernat. 
-Instead of using his example environment.yml, I've provided a coawst.yml file in this repository that we can use to create an environment for COAWST. 
-This environment by default just contains the bare essentials for running COAWST - the Open MPI software and compiler wrappers as well as netCDF-C and netCDF-fortran. 
-Once you are in the same directory as coawst.yml...
+Anyway, once you are in the same directory as coawst.yml...
 ``` 
 conda create env -f coawst.yml
 conda activate coawst
