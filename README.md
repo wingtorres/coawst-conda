@@ -30,7 +30,7 @@ In the "config" script", we use the convenient environmental variable $CONDA_PRE
 export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
  ```
-Indicate that we want to compile the code using MPI/MPIF90
+Indicate that we want to compile the code with MPI/MPIf90
 ```
 export USE_MPI=ON
 export USE_MPIF90=ON
@@ -124,8 +124,8 @@ else
 endif
 ```
 
-Notice all I did was add a variable, NC_CONFIG, that calls the command "nc-config", for which the --prefix option DOES work
-and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, and also added -lnetcdf and -lnetcdff to LIBS.
+Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, while also adding -lnetcdf and -lnetcdff to LIBS. Alternatively we could have manually specified the NETCDF_LIBDIR and NETCDF_INCDIR variables, but we still would have had to add -lnetcdff to the LIBS: line after the else statement, and I'm mostly hoping that in future versions of COAWST "USE_NETCDF4" will just be more reliable.
+
 Now in the SCRIP_COAWST directory
 ```
 make
