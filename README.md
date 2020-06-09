@@ -10,7 +10,7 @@ quick guide to installing the libraries necessary to run COAWST via conda
 
 ## Create a conda environment w/ requisite libraries
 Here we will use *conda*, which is often associated with managing python packages, but can really be used for any software 
-(it's very worth checking out this [article](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/) by @jakedvp for more information). Conda is a good way to install the prerequisite libraries for COAWST - namely MPI and NETCDF to save the hassle of building the code from source, which can be intimidating and difficult
+(it's very worth checking out this [article](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/) by @jakedvp for more information). Conda is a good way to install the prerequisite libraries for COAWST - namely MPI and netCDF to save the hassle of building the code from source, which can be intimidating and difficult
 for people like me who aren't super comfortable at the command line. Managing software within environments also allow us to keep software and dependencies organized, which faciltates reproducibility and portability.
 
 I recommend using the lightweight Miniconda, and to install it following the excellent [guide](https://medium.com/@rabernat/custom-conda-environments-for-data-science-on-hpc-clusters-32d58c63aa95) by @rabernat. 
@@ -124,7 +124,7 @@ else
 endif
 ```
 
-Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, while also adding -lnetcdf and -lnetcdff to LIBS. Alternatively we could have manually specified the NETCDF_LIBDIR and NETCDF_INCDIR variables, but we still would have had to add -lnetcdff to the LIBS: line after the else statement, and I'm mostly hoping that in future versions of COAWST "USE_NETCDF4" will just be more reliable.
+Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, while also adding -lnetcdf and -lnetcdff to LIBS. Alternatively we could have manually specified the NETCDF_LIBDIR and NETCDF_INCDIR variables, but we still would have had to add -lnetcdff to the LIBS: line after the else statement. Mostly I'm hoping that in future versions of COAWST "USE_NETCDF4" will just be more reliable.
 
 Now in the SCRIP_COAWST directory
 ```
