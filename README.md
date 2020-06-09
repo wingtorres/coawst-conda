@@ -1,5 +1,5 @@
 # coawst-conda
-quick guide to installing the libraries necessary to build COAWST via conda
+quick guide to installing the libraries necessary to run COAWST via conda
 
 ## Outline
 1. Create a conda environment w/ requisite libraries
