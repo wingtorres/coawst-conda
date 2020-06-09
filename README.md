@@ -95,6 +95,22 @@ Below are the edits I've made to the relevant .mk file (in my case Darwin-gfortr
 ```
 ifdef USE_NETCDF4
         NF_CONFIG ?= nf-config
+    NETCDF_INCDIR ?= $(shell $(NF_CONFIG) --prefix)/include
+             LIBS += $(shell $(NF_CONFIG) --flibs)
+           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
+else
+    NETCDF_INCDIR ?= /opt/gfortransoft/serial/netcdf3/include
+    NETCDF_LIBDIR ?= /opt/gfortransoft/serial/netcdf3/lib
+      NETCDF_LIBS ?= -lnetcdf
+             LIBS += -L$(NETCDF_LIBDIR) $(NETCDF_LIBS)
+           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
+endif
+```
+*modified*
+
+```
+ifdef USE_NETCDF4
+        NF_CONFIG ?= nf-config
         NC_CONFIG ?= nc-config
     NETCDF_INCDIR ?= $(shell $(NC_CONFIG) --prefix)/include
              LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
@@ -104,24 +120,6 @@ else
     NETCDF_LIBDIR ?= /opt/gfortransoft/serial/netcdf3/lib
       NETCDF_LIBS ?= -lnetcdf -lnetcdff
              LIBS += -L$(NETCDF_LIBDIR) $(NETCDF_LIBS) 
-           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-endif
-```
-
-*modified*
-
-```
-ifdef USE_NETCDF4
-        NF_CONFIG ?= nf-config
-        NC_CONFIG ?= nc-config
-    NETCDF_INCDIR ?= $(shell $(NC_CONFIG) --prefix)/include
-             LIBS += $(shell $(NF_CONFIG) --flibs)
-           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-else
-    NETCDF_INCDIR ?= /opt/gfortransoft/serial/netcdf3/include
-    NETCDF_LIBDIR ?= /opt/gfortransoft/serial/netcdf3/lib
-      NETCDF_LIBS ?= -lnetcdf
-             LIBS += -L$(NETCDF_LIBDIR) $(NETCDF_LIBS)
            INCDIR += $(NETCDF_INCDIR) $(INCDIR)
 endif
 ```
