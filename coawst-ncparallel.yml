@@ -1,0 +1,14 @@
+name: coawst-ncparallel
+channels:
+  - conda-forge
+  - spectraldns 
+  - nodefaults
+dependencies:
+  - openmpi
+  - openmpi-mpicc
+  - openmpi-mpifort
+  - python=3.7
+#  - netcdf4-parallel
+  - libnetcdf-parallel
+  - netcdf-fortran
+

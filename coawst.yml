@@ -1,0 +1,11 @@
+name: coawst
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - openmpi
+  - openmpi-mpicc
+  - openmpi-mpifort
+  - libnetcdf
+  - netcdf-fortran
+
