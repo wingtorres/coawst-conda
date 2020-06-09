@@ -92,6 +92,7 @@ nf-config
 clearly lists the path to the prefix directory. 
 
 Below are the edits I've made to the relevant .mk file (in my case Darwin-gfortran.mk, but it would be another file if you're using a different OS/compiler)
+
 *original*
 
 ```
@@ -109,7 +110,6 @@ else
            INCDIR += $(NETCDF_INCDIR) $(INCDIR)
 endif
 ```
-
 
 *modified*
 
@@ -144,3 +144,10 @@ Test the installation by first editing coawst.bash so that USE_NETCDF4=ON along 
 mpirun -np x ./coawstM path/to/coupling_file.in
 ```
 hopefully runs the code. Please let me know if it doesnt work for you, or if I've overlooked/glossed over anything!
+
+### to do
+-can't get parallel netcdf to work in conda (see coawst-ncparallel.yml). I'm relying on the spectraldns distribution of libnetcdf-parallel, but it doesn't get the library prefix right when I conda install it. Looks like an environment variable is set incorrectly or something b/c the path is like 
+```
+/Users/wit/anaconda3/envs/coawst//Users/wit/anaconda3/envs/coawst/lib
+```
+I'll get around to putting in an issue soon.
