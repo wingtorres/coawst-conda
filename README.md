@@ -18,7 +18,7 @@ Instead of using his example environment.yml, I've provided a coawst.yml file in
 
 Anyway, once you are in the same directory as coawst.yml...
 ``` 
-conda create env -f coawst.yml
+conda env create -f coawst.yml
 conda activate coawst
 ```
 will create and activate an environment named "coawst". The name is specified at the top of the .yml file, so feel free to change that to whatever you want.
