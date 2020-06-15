@@ -133,7 +133,7 @@ make
 should work.
 
 ## Running COAWST
-Test the installation by first editing coawst.bash so that USE_NETCDF4=ON along with USE_MPI=ON and USE_MPIF90=ON and uncomment which_mpi=open_mpi, after which
+Test the installation by first editing coawst.bash so that USE_NETCDF4=ON along with USE_MPI=ON + USE_MPIF90=ON, uncomment which_mpi=openmpi, and set FORT = gfortran, after which
 ```
 ./coawst.bash -j
 mpirun -np x ./coawstM path/to/coupling_file.in
