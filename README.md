@@ -60,11 +60,11 @@ When building MCT it's good to specify the prefix and compiler flags in the ./co
 ./configure --prefix=$MCT_PATH CC=$CC FC=$FC
 ```
 I still ended up having to edit Makefile.conf because conda wanted to use it's own GNU *ar* program, which threw an error when building MCT.
-On MacOSX I changed the last line of Makefile.conf back to system default
+On Mac OS X I changed the last line of Makefile.conf back to system default
 ```
 AR = ar cq
 ```
-which worked for me, but it would be great hear if there's another solution. After ./configure and editing the resultant Makefile.conf
+which worked for me, but it would be great to hear if there's another solution. After ./configure and editing the resultant Makefile.conf
 ```
 make
 make install
