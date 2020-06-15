@@ -136,9 +136,12 @@ should work.
 Test the installation by first editing coawst.bash so that USE_NETCDF4=ON along with USE_MPI=ON + USE_MPIF90=ON, uncomment which_mpi=openmpi, and set FORT = gfortran, after which
 ```
 ./coawst.bash -j
+```
+hopefully successfuly compiles the code. After modifying NtileI/NtileJ in the ROMS input file and NnodesOCN= / NnodesWav= in the coupling input file of the test case of your choice - you can test the code execution via 
+```
 mpirun -np x ./coawstM path/to/coupling_file.in
 ```
-hopefully runs the code. Please let me know if it doesnt work for you, or if I've overlooked/glossed over anything!
+Please let me know if it doesnt work for you, or if I've overlooked/glossed over anything!
 
 ### to do
 -can't get parallel netcdf to work in conda (see coawst-ncparallel.yml). I'm relying on the spectraldns distribution of libnetcdf-parallel, but it doesn't get the library prefix right when I conda install it. Looks like an environment variable is set incorrectly or something b/c the path is like 
