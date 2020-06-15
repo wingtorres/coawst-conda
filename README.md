@@ -126,7 +126,7 @@ endif
 
 Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, while also adding -lnetcdf and -lnetcdff to LIBS. Alternatively we could have manually specified the NETCDF_LIBDIR and NETCDF_INCDIR variables, but we still would have had to add -lnetcdff to the LIBS: line after the else statement. Mostly I'm hoping that in future versions of COAWST "USE_NETCDF4" will just be more reliable.
 
-Now in the SCRIP_COAWST directory
+Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile,
 ```
 make
 ```
