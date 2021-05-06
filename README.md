@@ -27,7 +27,7 @@ will create and activate an environment named "coawst". The name is specified at
 COAWST requires some environment variables to be set so that the software knows which libraries and compilers to use. 
 In the "config" script", we use the convenient environmental variable $CONDA_PREFIX to point to the Open MPI Fortran and C wrappers, also modifying the PATH environment variable so that the conda version of mpirun is set to default in case of conflicting installations.
 ```
-export PATH=${CONDA_PREFIX}/bin/:$PATH
+export PATH=${CONDA_PREFIX}/bin:$PATH
 export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
  ```
