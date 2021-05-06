@@ -128,16 +128,23 @@ USE_MPIF90=ON
 which_mpi=openmpi
 FORT = gfortran
 ```
-and uncomment either line of
-```
-#export       SCRATCH_DIR=${MY_PROJECT_DIR}/Build
-#export       SCRATCH_DIR=./Build
-```
 after which
 ```
 ./coawst.bash -j
 ```
-should succesfully compiles the code. After modifying NtileI/NtileJ in the ROMS input file and NnodesOCN= / NnodesWav= in the coupling input file of the test case of your choice depending on the number of processors you want to use - you can test the code execution with
+should succesfully compiles the code. note: I prefer to set the the MY_ROOT_DIR as the location of the COAWST directory, and specify the project using MY_PROJECT_DIR then modify 
+```
+   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
+   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
+```
+to 
+```
+   export     MY_HEADER_DIR=${MY_PROJECT_DIR}
+   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}
+```
+and let BINDIR=${MY_PROJECT_DIR} and SCRATCH_DIR=${MY_PROJECT_DIR}/Build so that executable and Build directory are in the project folder. This makes it easier for me to manage multiple projects at once, especially if I expect to have to recompile from time to time.
+
+Now after modifying NtileI/NtileJ in the ROMS input file and NnodesOCN= / NnodesWav= in the coupling input file of the test case of your choice depending on the number of processors you want to use - you can test the code execution with
 ```
 mpirun -np x ./coawstM path/to/coupling_file.in
 ```
