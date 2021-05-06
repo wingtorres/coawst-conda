@@ -25,8 +25,9 @@ will create and activate an environment named "coawst". The name is specified at
  
  ## Set environment variables
 COAWST requires some environment variables to be set so that the software knows which libraries and compilers to use. 
-In the "config" script", we use the convenient environmental variable $CONDA_PREFIX to point to the Open MPI Fortran and C wrappers
+In the "config" script", we use the convenient environmental variable $CONDA_PREFIX to point to the Open MPI Fortran and C wrappers, also modifying the PATH environment variable so that the conda version of mpirun is set to default in case of conflicting installations.
 ```
+export PATH=${CONDA_PREFIX}/bin/:$PATH
 export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
  ```
@@ -39,7 +40,7 @@ Allow for the "nc-config"/"nf-config" command to specify the paths to the netCDF
 ```
 export USE_NETCDF4=ON
 ```
-And lastly to specify a location for the MCT libraries to installed.
+Specify a location for the MCT libraries to installed.
 ```
 export MCT_PATH=${HOME}/COAWST/Lib/MCT
 export MCT_INCDIR=${MCT_PATH}/include
@@ -98,13 +99,6 @@ ifdef USE_NETCDF4
     NETCDF_INCDIR ?= $(shell $(NF_CONFIG) --prefix)/include
              LIBS += $(shell $(NF_CONFIG) --flibs)
            INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-else
-    NETCDF_INCDIR ?= /opt/gfortransoft/serial/netcdf3/include
-    NETCDF_LIBDIR ?= /opt/gfortransoft/serial/netcdf3/lib
-      NETCDF_LIBS ?= -lnetcdf
-             LIBS += -L$(NETCDF_LIBDIR) $(NETCDF_LIBS)
-           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-endif
 ```
 *modified*
 
@@ -113,18 +107,11 @@ ifdef USE_NETCDF4
         NF_CONFIG ?= nf-config
         NC_CONFIG ?= nc-config
     NETCDF_INCDIR ?= $(shell $(NC_CONFIG) --prefix)/include
-             LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
+             LIBS += $(shell $(NF_CONFIG) --flibs)
            INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-else
-    NETCDF_INCDIR ?= /opt/gfortransoft/serial/netcdf3/include
-    NETCDF_LIBDIR ?= /opt/gfortransoft/serial/netcdf3/lib
-      NETCDF_LIBS ?= -lnetcdf -lnetcdff
-             LIBS += -L$(NETCDF_LIBDIR) $(NETCDF_LIBS) 
-           INCDIR += $(NETCDF_INCDIR) $(INCDIR)
-endif
 ```
 
-Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON, while also adding -lnetcdf and -lnetcdff to LIBS. Alternatively we could have manually specified the NETCDF_LIBDIR and NETCDF_INCDIR variables, but we still would have had to add -lnetcdff to the LIBS: line after the else statement. Mostly I'm hoping that in future versions of COAWST "USE_NETCDF4" will just be more reliable.
+Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON. Hopefully in future versions of netcdf-fortran "nf-config --prefix" will be more reliable.
 
 Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile,
 ```
@@ -133,11 +120,24 @@ make
 should work.
 
 ## Running COAWST
-Test the installation by first editing coawst.bash so that USE_NETCDF4=ON along with USE_MPI=ON + USE_MPIF90=ON, uncomment which_mpi=openmpi, and set FORT = gfortran, after which
+Test the installation by first editing coawst.bash so that 
+```
+USE_NETCDF4=ON
+USE_MPI=ON
+USE_MPIF90=ON
+which_mpi=openmpi
+FORT = gfortran
+```
+and uncomment either line of
+```
+#export       SCRATCH_DIR=${MY_PROJECT_DIR}/Build
+#export       SCRATCH_DIR=./Build
+```
+after which
 ```
 ./coawst.bash -j
 ```
-hopefully successfuly compiles the code. After modifying NtileI/NtileJ in the ROMS input file and NnodesOCN= / NnodesWav= in the coupling input file of the test case of your choice - you can test the code execution via 
+should succesfully compiles the code. After modifying NtileI/NtileJ in the ROMS input file and NnodesOCN= / NnodesWav= in the coupling input file of the test case of your choice depending on the number of processors you want to use - you can test the code execution with
 ```
 mpirun -np x ./coawstM path/to/coupling_file.in
 ```
