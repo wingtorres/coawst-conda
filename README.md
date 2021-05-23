@@ -111,9 +111,11 @@ ifdef USE_NETCDF4
            INCDIR += $(NETCDF_INCDIR) $(INCDIR)
 ```
 
-Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON. Hopefully in future versions of netcdf-fortran "nf-config --prefix" will be more reliable.
-
-Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile,
+Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON. Hopefully in future versions of netcdf-fortran "nf-config --prefix" will be more reliable. Note: if "nf-config --flibs" does not return "-lnetcdf" and "-lnetcdff" you'll need to add them to libs as follows
+```
+LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
+```
+Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile and comment out
 ```
 make
 ```
