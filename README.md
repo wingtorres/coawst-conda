@@ -1,5 +1,5 @@
 # coawst-conda
-quick guide to installing the libraries necessary to run COAWST via conda
+A quick guide to installing the libraries necessary to run COAWST via the conda package manager. This install was successfully tested on MacOS Monterey 12.4 on an Apple M1 Max chip.
 
 ## Outline
 1. Create a conda environment w/ requisite libraries
