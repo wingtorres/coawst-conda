@@ -4,21 +4,27 @@
 export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
 
+#Compiler flags
+#export FCFLAGS="-fallow-argument-mismatch"
+#export FFLAGS="-fallow-argument-mismatch"
+export AR="$(which ar) cq"
+
 #MPI
 export USE_MPI=ON
 export USE_MPIF90=ON
 
 #NETCDF
 export USE_NETCDF4=ON
-unset NETCDF_INCDIR
-unset NETCDF_LIBDIR
-
-#export USE_NETCDF4=
-#export NETCDF_INCDIR=${CONDA_PREFIX}/include
-#export NETCDF_LIBDIR=${CONDA_PREFIX}/lib
 
 #MCT
 export MCT_PATH=${HOME}/COAWST/Lib/MCT
 export MCT_INCDIR=${MCT_PATH}/include
 export MCT_LIBDIR=${MCT_PATH}/lib
+
+#export USE_NETCDF4=
+#export NETCDF_INCDIR=${CONDA_PREFIX}/include
+#export NETCDF_LIBDIR=${CONDA_PREFIX}/lib
+#unset NETCDF_INCDIR
+#unset NETCDF_LIBDIR
+
 
