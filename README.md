@@ -60,7 +60,7 @@ We're now ready to build the libraries that come with COAWST, which is already p
 but there are a few tweaks that will make our lives easier.
 
 ### gfortran
-We need to modify the compiler (COAWST/Compilers/Darwin-gfortran.mk in my case) a bt so that the installation is smooth. First, add the
+We need to modify the compiler (COAWST/Compilers/Darwin-gfortran.mk in my case) so that the installation is smooth. First, add the
 following flag to FFLAGS so the line looks like
 ```
 FFLAGS := -frepack-arrays -fallow-argument-mismatch
