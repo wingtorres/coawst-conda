@@ -105,6 +105,7 @@ ifdef USE_NETCDF4
 Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON. Hopefully in future versions of netcdf-fortran "nf-config --prefix" will be more reliable. Note: if "nf-config --flibs" does not return "-lnetcdf" and "-lnetcdff" you'll need to add them to libs as follows
 ```
 LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
+```
 
 ### MCT
 Now we are ready to build the libraries. First, enter the Lib/MCT directory. When building MCT it's good to specify the prefix and compiler flags in the ./configure command itself to minimize editing Makefile.conf
