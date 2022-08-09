@@ -46,35 +46,26 @@ export MCT_PATH=${HOME}/COAWST/Lib/MCT
 export MCT_INCDIR=${MCT_PATH}/include
 export MCT_LIBDIR=${MCT_PATH}/lib
 ```
-All of these commands are in the "config" text file in this repository, so you can just edit it as you see fit then in the command line enter
+Use system default AR
+```
+export AR="$(which ar) cq"
+```
+All of these commands are in the "config" text file in this repository which you can call with
 ```
 source config
 ```
-before moving on. You might think about automatically sourcing "config" upon environment activation 
+You might think about automatically sourcing "config" upon environment activation 
 (see https://stackoverflow.com/questions/34606196/create-a-post-activate-script-in-conda)
 We're now ready to build the libraries that come with COAWST, which is already pretty well covered in the COAWST_User_Manual.docx, 
 but there are a few tweaks that will make our lives easier.
 
-### MCT
-When building MCT it's good to specify the prefix and compiler flags in the ./configure command itself to minimize editing Makefile.conf
+### gfortran
+We need to modify the compiler (COAWST/Compilers/Darwin-gfortran.mk in my case) a bt so that the installation is smooth. First, add the
+following flag to FFLAGS so the line looks like
 ```
-./configure --prefix=$MCT_PATH CC=$CC FC=$FC
+FFLAGS := -frepack-arrays -fallow-argument-mismatch
 ```
-I still ended up having to edit Makefile.conf because conda wanted to use it's own GNU *ar* program, which threw an error when building MCT.
-On Mac OS X I changed the last line of Makefile.conf back to system default
-```
-AR = ar cq
-```
-which worked for me, but it would be great to hear if there's another solution. After ./configure and editing the resultant Makefile.conf
-```
-make
-make install
-```
-should successfully build MCT
-
-### SCRIP_COAWST
-
-Before building SCRIP_COAWST we need to quickly dig into the Compilers directory and edit a .mk file to ensure netCDF libraries are correctly pointed to.
+We also need to ensure that our netCDF libraries are correctly pointed to.
 It should be very convenient to use
 ```
 export USE_NETCDF4
@@ -89,7 +80,7 @@ nf-config
 ```
 clearly lists the path to the prefix directory. 
 
-Below are the edits I've made to the relevant .mk file (in my case Darwin-gfortran.mk, but it would be another file if you're using a different OS/compiler)
+Below are the edits I've made to the relevant .mk file 
 
 *original*
 
@@ -114,6 +105,18 @@ ifdef USE_NETCDF4
 Notice all I did was add a variable, NC_CONFIG, that calls the shell command "nc-config", for which the --prefix option DOES work and correctly points to the netcdf directory in our environment when USE_NETCDF4=ON. Hopefully in future versions of netcdf-fortran "nf-config --prefix" will be more reliable. Note: if "nf-config --flibs" does not return "-lnetcdf" and "-lnetcdff" you'll need to add them to libs as follows
 ```
 LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
+
+### MCT
+Now we are ready to build the libraries. First, enter the Lib/MCT directory. When building MCT it's good to specify the prefix and compiler flags in the ./configure command itself to minimize editing Makefile.conf
+```
+./configure --prefix=$MCT_PATH CC=$CC FC=$FC AR=$AR
+```
+make
+make install
+```
+should successfully build MCT
+
+### SCRIP_COAWST
 ```
 Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile and comment out
 ```
