@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Modify PATH
+export PATH=${CONDA_PREFIX}/bin:$PATH
+
 #Compilers
 export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
