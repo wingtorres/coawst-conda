@@ -109,8 +109,11 @@ LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
 
 ### MCT
 Now we are ready to build the libraries. First, enter the Lib/MCT directory. When building MCT it's good to specify the prefix and compiler flags in the ./configure command itself to minimize editing Makefile.conf
+
 ```
 ./configure --prefix=$MCT_PATH CC=$CC FC=$FC AR=$AR
+```
+after which
 ```
 make
 make install
@@ -118,15 +121,16 @@ make install
 should successfully build MCT
 
 ### SCRIP_COAWST
-```
-Now in the SCRIP_COAWST directory, after making sure FORT = gfortran in the makefile and comment out
+
+Now navigate to the SCRIP_COAWST directory, set FORT = gfortran in the makefile and then
 ```
 make
 ```
-should work.
+should build SCRIP successfully.
 
 ## Running COAWST
 Test the installation by first editing coawst.bash so that 
+
 ```
 USE_NETCDF4=ON
 USE_MPI=ON
