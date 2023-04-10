@@ -111,7 +111,7 @@ LIBS += $(shell $(NF_CONFIG) --flibs) -lnetcdf -lnetcdff
 Now we are ready to build the libraries. First, enter the Lib/MCT directory. When building MCT it's good to specify the prefix and compiler flags in the ./configure command itself to minimize editing Makefile.conf
 
 ```
-./configure --prefix=$MCT_PATH CC=$CC FC=$FC AR=$AR
+./configure --prefix=$MCT_PATH CC=$CC CXX=$CXX FC=$FC F90=$FC FCFLAGS=$FCFLAGS AR=$AR
 ```
 after which
 ```
