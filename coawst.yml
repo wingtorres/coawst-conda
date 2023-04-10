@@ -5,6 +5,7 @@ channels:
 dependencies:
   - openmpi
   - openmpi-mpicc
+  - openmpi-mpicxx
   - openmpi-mpifort
   - libnetcdf
   - netcdf-fortran
