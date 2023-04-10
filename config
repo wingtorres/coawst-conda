@@ -8,7 +8,7 @@ export CC=${CONDA_PREFIX}/bin/mpicc
 export FC=${CONDA_PREFIX}/bin/mpif90
 
 #Compiler flags
-#export FCFLAGS="-fallow-argument-mismatch"
+export FCFLAGS="-fallow-argument-mismatch"
 #export FFLAGS="-fallow-argument-mismatch"
 export AR="$(which ar) cq"
 
